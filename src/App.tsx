@@ -1,4 +1,4 @@
-import Component from './starter/03-state/index';
+import Component from './starter/04-events/index';
 
 function App() {
   return (
