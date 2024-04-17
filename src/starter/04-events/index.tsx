@@ -29,9 +29,10 @@ const Component = () => {
     //_____------- OR -----______
     const data = Object.fromEntries(formData); //NOTE - Object.fromEntries() gets all the form data at once.
     const person: Person = {
-      name: data.name as string,
+      text: data.text as string,
       email: data.email as string,
     };
+    console.log(person);
   };
 
   return (
