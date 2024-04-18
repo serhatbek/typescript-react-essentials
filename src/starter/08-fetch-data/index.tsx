@@ -1,19 +1,11 @@
 import { useEffect, useState } from 'react';
-
+import { type Tour, tourSchema } from '../../types';
 const url = 'https://www.course-api.com/react-tours-project';
 
-type dataProps = {
-  id: string;
-  img: string;
-  info: string;
-  name: string;
-  price: string;
-};
-
 const Component = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [tours, setTours] = useState<Tour[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState<string | null>(null);
-  const [tours, setTours] = useState<dataProps[] | []>([]);
 
   console.log('tours', tours);
 
@@ -25,8 +17,13 @@ const Component = () => {
         if (!response.ok) {
           throw new Error(`Failed to fetch tours...`);
         }
-        const data = await response.json();
-        setTours(data);
+        const rawData: Tour[] = await response.json();
+        const result = tourSchema.array().safeParse(rawData);
+        if (!result.success) {
+          console.log(result.error.message);
+          throw new Error(`Failed to parse tours...`);
+        }
+        setTours(result.data);
       } catch (error) {
         const errMessage =
           error instanceof Error ? error.message : 'there was an error...';
@@ -50,7 +47,7 @@ const Component = () => {
   return (
     <div>
       <h2 className='mb-1'>Tours</h2>
-      {tours?.map((tour: dataProps) => {
+      {tours?.map((tour: Tour) => {
         return (
           <article key={tour.id}>
             <img src={tour.img} alt={tour.name} />
