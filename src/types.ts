@@ -15,7 +15,6 @@ export type Tour = z.infer<typeof tourSchema>;
 
 export const fetchTours = async (): Promise<Tour[]> => {
   const response = await axios.get<Tour[]>(url);
-  console.log('response', response.data);
   const result = tourSchema.array().safeParse(response.data);
 
   if (!result.success) {
@@ -23,6 +22,6 @@ export const fetchTours = async (): Promise<Tour[]> => {
     throw new Error(`Failed to parse tours...`);
   }
 
-  console.log('result fetch', result);
+  console.log('result fetch', result.data);
   return result.data;
 };
