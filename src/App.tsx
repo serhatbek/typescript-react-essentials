@@ -1,11 +1,10 @@
-import Component from './starter/05-challenge/index';
+import Component from './starter/08-fetch-data/index';
 
 function App() {
   return (
     <main>
       <h2>React & Typescript</h2>
-      <Component type='basic' name='Susan' />
-      <Component type='advanced' name='Tina' email='ggg@gmail.com' />
+      <Component />
     </main>
   );
 }
