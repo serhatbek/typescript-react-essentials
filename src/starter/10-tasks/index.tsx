@@ -32,7 +32,7 @@ const Component = () => {
     );
   };
 
-  const deleteTask = (taskId) => {
+  const deleteTask = (taskId: string) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
