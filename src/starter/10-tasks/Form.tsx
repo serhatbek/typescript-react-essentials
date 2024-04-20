@@ -1,9 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
-import { Task } from './types';
 
 type FormProps = {
-  addTask: (item: Task) => void;
+  addTask: (text: string) => void;
 };
 
 const Form = ({ addTask }: FormProps) => {
@@ -11,15 +9,12 @@ const Form = ({ addTask }: FormProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (text == '') {
-      console.log('please enter a value');
+    if (text === '') {
+      alert('Please enter a value!');
       return;
     }
-    addTask({
-      id: uuidv4(),
-      description: text,
-      isCompleted: false,
-    });
+
+    addTask(text);
     setText('');
   };
 
