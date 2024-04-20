@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { Task } from './types';
+import { v4 as uuidv4 } from 'uuid';
 
 type FormProps = {
-  addTask: (text: string) => void;
+  addTask: (task: Task) => void;
 };
 
 const Form = ({ addTask }: FormProps) => {
@@ -14,7 +16,11 @@ const Form = ({ addTask }: FormProps) => {
       return;
     }
 
-    addTask(text);
+    addTask({
+      id: uuidv4(),
+      description: text,
+      isCompleted: false,
+    });
     setText('');
   };
 
@@ -23,9 +29,16 @@ const Form = ({ addTask }: FormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type='text' name='text' value={text} onChange={handleChange} />
-      <button type='submit'>Submit</button>
+    <form className='form task-form' onSubmit={handleSubmit}>
+      <input
+        type='text'
+        value={text}
+        onChange={handleChange}
+        className='form-input'
+      />
+      <button type='submit' className='btn'>
+        Submit
+      </button>
     </form>
   );
 };

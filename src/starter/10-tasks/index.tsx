@@ -2,39 +2,35 @@ import { useState } from 'react';
 import { type Task } from './types';
 import Form from './Form';
 import List from './List';
-import { v4 as uuidv4 } from 'uuid';
 
 const Component = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [isCompleted, setIsCompleted] = useState(false);
 
   console.log('tasks', tasks);
 
-  const addTask = (text: string) => {
-    setTasks((prevState: Task[]) => {
-      return [
-        ...prevState,
-        {
-          id: uuidv4(),
-          description: text,
-          isCompleted: isCompleted,
-        },
-      ];
-    });
+  const addTask = (task: Task) => {
+    setTasks([...tasks, task]);
   };
 
-  const toggleTask = (): void => {
-    setIsCompleted(!isCompleted);
+  const toggleTask = ({ id }: { id: string }) => {
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === id) {
+          return { ...task, isCompleted: !task.isCompleted };
+        }
+        return task;
+      })
+    );
   };
 
   return (
-    <div>
+    <section>
       <h2>Tasks</h2>
       <div>
         <Form addTask={addTask} />
-        <List toggleTask={toggleTask} />
+        <List toggleTask={toggleTask} tasks={tasks} />
       </div>
-    </div>
+    </section>
   );
 };
 
