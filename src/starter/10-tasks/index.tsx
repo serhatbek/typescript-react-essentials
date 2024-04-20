@@ -5,11 +5,20 @@ import List from './List';
 
 const Component = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  console.log('tasks', tasks);
+
+  const addTask = (item: Task) => {
+    setTasks((prevState: Task[]) => {
+      return [...prevState, item];
+    });
+  };
+
   return (
     <div>
       <h2>Tasks</h2>
       <div>
-        <Form />
+        <Form addTask={addTask} />
         <List />
       </div>
     </div>
